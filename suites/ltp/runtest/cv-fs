@@ -1,0 +1,51 @@
+# cv-fs — Curvine-curated LTP command file (initial version).
+#
+# Scope: the syscall surfaces Curvine's FUSE mount currently claims to
+# support (create/read/write/truncate, namespace ops, basic metadata,
+# mmap coherence, fcntl locks, renameat2). Grows over time; failures
+# here are regression signal, not noise.
+#
+# Install target: /opt/ltp/runtest/cv-fs  (cvtest run does this
+# automatically before invoking runltp).
+#
+# NOTE: cases must exist in the LTP release pinned by
+# tools/ltp/install-ltp.sh (currently 20250930; symlink01/unlink01 were
+# removed upstream and replaced here by symlink02/unlink05).
+
+# --- core file data path ---
+open01			open01
+open02			open02
+open03			open03
+read01			read01
+write01			write01
+write02			write02
+truncate02		truncate02
+ftruncate01		ftruncate01
+fallocate01		fallocate01
+fallocate02		fallocate02
+
+# --- namespace operations ---
+mkdir02			mkdir02
+rmdir01			rmdir01
+rmdir02			rmdir02
+link02			link02
+symlink02		symlink02
+readlink01		readlink01
+rename01		rename01
+renameat201		renameat201
+renameat202		renameat202 -i 10
+unlink05		unlink05
+
+# --- basic metadata ---
+stat01			stat01
+lstat01			lstat01
+access01		access01
+chmod01			chmod01
+chown01			chown01
+utime01			utime01
+utime02			utime02
+
+# --- coherence and locks (surfaces with known past regressions) ---
+mmap01			mmap01
+fcntl14			fcntl14
+fcntl16			fcntl16
